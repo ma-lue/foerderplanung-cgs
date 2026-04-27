@@ -129,7 +129,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 .step3-empty{text-align:center;padding:40px 20px;color:var(--clr-text-muted);font-size:0.95rem}
 .s3-phase2-actions{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
 /* Step 4 Table */
-.mt{width:100%;border-collapse:collapse;table-layout:fixed}
+.mt{width:100%;border-collapse:collapse}
 .mt td,.mt th{padding:2px;vertical-align:top;font-size:0.85rem;background:var(--clr-white)}
 .mt textarea{width:100%;border:none;border-radius:0;background:transparent;font-family:inherit;font-size:0.85rem;color:var(--clr-text);resize:none;overflow:hidden;padding:4px;line-height:1.4;height:auto;box-sizing:border-box}
 .mt textarea:focus{outline:none;background:var(--clr-surface)}
@@ -142,14 +142,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 .mt-fb-header .mt-fb-input::placeholder{color:rgba(255,255,255,0.6)}
 .mt-fb-header.editing .mt-fb-label .mt-fb-text,.mt-fb-header.editing .mt-fb-label .mt-hint{display:none}
 .mt-fb-header.editing .mt-fb-input{display:block}
-.mt-fb-header .mt-fb-act{background:var(--clr-accent-light)!important;padding:5px 8px!important;text-align:center;vertical-align:middle;white-space:nowrap}
+.mt-fb-header .mt-fb-act{background:var(--clr-accent-light)!important;padding:5px 4px!important;text-align:center;vertical-align:middle;white-space:nowrap;width:80px;min-width:80px}
 .mt-fb-header .mt-fb-act .mt-btn{min-width:28px}
 .mt-row td{border-bottom:1px solid #bbb;vertical-align:top}
 .mt-goal-cell{border-right:1px solid #bbb;position:relative}
 .mt-goal-cell textarea{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%!important;padding:4px;min-height:100%!important;overflow:hidden}
 .mt-mass-cell{border-right:1px solid #bbb}
 .mt-wer-cell{border-right:1px solid #bbb}
-.mt-act-cell{text-align:center;white-space:nowrap;vertical-align:middle}
+.mt-act-cell{text-align:center;white-space:nowrap;vertical-align:middle;width:80px;min-width:80px;padding:2px 4px!important}
 .mt-act-cell .mt-btn{margin:1px}
 .mt-tz-sep td{border-bottom:2px solid #999!important}
 .mt-fb-sep-line{border-bottom:3px solid var(--clr-accent-dark)}
@@ -563,11 +563,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         /* ===== MASSTABLE ===== */
         function renderMT(){
             var mc=$("mtC"),fbs=plan.foerderbereiche,h='';
-            h+='<table class="mt" style="margin-bottom:0"><colgroup><col style="width:22%"><col style="width:53%"><col style="width:17%"><col style="width:8%"></colgroup>';
+            h+='<table class="mt" style="margin-bottom:0"><colgroup><col style="width:24%"><col style="width:48%"><col style="width:18%"><col style="min-width:80px;width:80px"></colgroup>';
             h+='<tr class="mt-colhead"><th>Förderbereich / Ziele</th><th>Maßnahmen</th><th>Wer? Wie oft?</th><th></th></tr></table>';
             fbs.forEach(function(fb,fi){
                 var tz=fb.teilziele;if(!tz||!tz.length)tz=fb.teilziele=[{id:uid(),"teilziel-text":"",massnahmen:[{id:uid(),"massnahme-text":"","wer-wie-oft":""}]}];
-                h+='<table class="mt mt-fb-block" style="margin-bottom:0"><colgroup><col style="width:22%"><col style="width:53%"><col style="width:17%"><col style="width:8%"></colgroup>';
+                h+='<table class="mt mt-fb-block" style="margin-bottom:0"><colgroup><col style="width:24%"><col style="width:48%"><col style="width:18%"><col style="min-width:80px;width:80px"></colgroup>';
                 h+='<tr class="mt-fb-header"><td colspan="3"><div class="mt-fb-label" data-fi="'+fi+'"><span class="mt-fb-text">'+(esc(fb.name)||'<em style="opacity:0.6">Förderbereich</em>')+'</span><span class="mt-hint">klicken zum Umbenennen</span><input list="fbNameSuggestions" class="mt-fb-input" value="'+esc(fb.name)+'" data-fi="'+fi+'" placeholder="Förderbereich eingeben"></div></td>';
                 h+='<td class="mt-fb-act"><button class="mt-btn" data-act="fb-up" data-fi="'+fi+'"'+(fi===0?" disabled":"")+'>\u2191</button> <button class="mt-btn" data-act="fb-down" data-fi="'+fi+'"'+(fi>=fbs.length-1?" disabled":"")+'>\u2193</button></td></tr>';
                 tz.forEach(function(t,ti){
