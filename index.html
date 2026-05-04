@@ -366,9 +366,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         var $ptT=$("plantypToggle"),$spF=$("sonderpaedFields"),$fk3=$("feldFk3");
         
         /* ===== CONFIRM ===== */
-        function showConfirm(t,cb){$("confirmTitle").textContent=t;confirmCb=cb;$("confirmModal").classList.add("visible")}
+        function showConfirm(t,cb){$("confirmTitle").textContent=t;confirmCb=cb;$("confirmModal").classList.add("visible");setTimeout(function(){$("btnConfirmOk").focus();},50)}
         $("btnConfirmOk").onclick=function(){$("confirmModal").classList.remove("visible");if(confirmCb)confirmCb()};
         $("btnConfirmCancel").onclick=function(){$("confirmModal").classList.remove("visible");confirmCb=null};
+        document.addEventListener("keydown",function(e){
+            if(e.key==="Enter"&&$("confirmModal").classList.contains("visible")){
+                e.preventDefault();
+                $("btnConfirmOk").click();
+            }
+        });
         
         /* ===== STEP 1 ===== */
         $ptT.onclick=function(e){
