@@ -33,9 +33,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 .progress-step.active .progress-step__label{color:var(--clr-accent-dark);font-weight:600}
 .progress-step.completed .progress-step__label{color:var(--clr-accent-dark)}
 /* Info */
-.info-box{background:var(--clr-surface);border-left:4px solid var(--clr-accent-light);border-radius:0 var(--radius) var(--radius) 0;padding:14px 20px;margin-bottom:28px;font-size:0.9rem;color:var(--clr-text)}
+.info-box{background:var(--clr-surface);border-left:4px solid var(--clr-accent-light);border-radius:0 var(--radius) var(--radius) 0;padding:14px 20px;margin-bottom:28px;font-size:0.9rem;color:var(--clr-text);transition:box-shadow 0.3s,border-color 0.3s}
 .info-box__title{font-weight:700;color:var(--clr-accent-dark);margin-bottom:4px;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em}
 .info-box__sub{margin-top:8px;font-size:0.78rem;color:var(--clr-text-muted);font-style:italic}
+@keyframes infoGlow{0%{box-shadow:0 0 0 0 rgba(105,163,210,0);border-color:var(--clr-accent-light);background:var(--clr-surface)}20%{box-shadow:0 0 0 8px rgba(105,163,210,0.4);border-color:var(--clr-accent-dark);background:#daeeff}80%{box-shadow:0 0 0 4px rgba(105,163,210,0.2);border-color:var(--clr-accent-dark);background:#daeeff}100%{box-shadow:0 0 0 0 rgba(105,163,210,0);border-color:var(--clr-accent-light);background:var(--clr-surface)}}
+.info-box.glow{animation:infoGlow 1.6s ease-out}
 /* Steps */
 .step-content{min-height:300px;margin-bottom:28px}
 .step-content[data-step]{display:none}
@@ -108,6 +110,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 .ziel-card__bereich{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:10px}
 .ziel-card__ist{font-weight:600;font-size:0.95rem;line-height:1.5;margin-bottom:8px}
 .ziel-card__soll{font-size:0.85rem;color:var(--clr-text-muted);line-height:1.5}
+/* Phase 2: Ziel prominent oben, Ist klein darunter */
+.phase2 .ziel-card__ist{font-weight:400;font-size:0.75rem;color:var(--clr-text-muted);margin-top:8px;margin-bottom:0}
+.phase2 .ziel-card__soll{font-size:1.0rem;color:var(--clr-text);font-weight:600;margin-bottom:0}
 .card-viewer .ziel-card{box-shadow:var(--shadow-md);padding:28px 32px}
 .card-viewer .ziel-card__ist{font-size:1.05rem}
 .card-viewer .ziel-card__soll{font-size:0.9rem}
@@ -126,6 +131,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 .ziel-card.active[data-fb="verhalten"]{border-color:var(--clr-fb-verhalten);background:var(--clr-fb-verhalten-bg)}
 .step3-empty{text-align:center;padding:40px 20px;color:var(--clr-text-muted);font-size:0.95rem}
 .s3-phase2-actions{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+/* Phase 3 Smartboard cards */
+.p3-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.p3-card{border:2px solid var(--clr-border);border-radius:var(--radius);background:var(--clr-white);padding:24px 28px;box-shadow:var(--shadow-md)}
+.p3-card__bereich{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px}
+.p3-card__soll{font-size:1.3rem;font-weight:700;line-height:1.4;margin-bottom:12px;color:var(--clr-text)}
+.p3-card__ist{font-size:0.75rem;color:var(--clr-text-muted);line-height:1.4}
+.p3-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;align-items:center}
+.p3-final{background:var(--clr-surface);border-radius:var(--radius);padding:20px 24px;margin-top:24px}
+.p3-final__title{font-weight:700;font-size:1rem;margin-bottom:16px;color:var(--clr-accent-dark)}
+.p3-final__opts{display:flex;gap:16px;flex-wrap:wrap}
+.p3-final__opt{flex:1;min-width:220px;border:2px solid var(--clr-border);border-radius:var(--radius);padding:16px 20px;background:var(--clr-white);cursor:pointer;transition:all var(--transition);text-align:left}
+.p3-final__opt:hover{border-color:var(--clr-accent-dark);background:var(--clr-surface)}
+.p3-final__opt-title{font-weight:700;font-size:0.95rem;margin-bottom:6px;color:var(--clr-text)}
+.p3-final__opt-desc{font-size:0.8rem;color:var(--clr-text-muted);line-height:1.4}
+/* Phase 2→3 choice row: equal height dark-blue buttons */
+.s3-next-row{display:flex;gap:12px;align-items:stretch;margin-top:8px;flex-wrap:wrap}
+.s3-next-row .btn{flex:1;min-width:180px;background:var(--clr-accent-dark);color:#fff;border:none;justify-content:center;align-items:center;display:flex;white-space:normal;text-align:center;line-height:1.3}
+.s3-next-row .btn:hover{background:#0d2d4a}
 /* Step 4 Table */
 .mt{width:100%;border-collapse:collapse}
 .mt td,.mt th{padding:2px;vertical-align:top;font-size:0.85rem;background:var(--clr-white)}
@@ -260,6 +283,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 <div class="modal-overlay" id="importModal"><div class="modal"><h2>Direkt zum fertigen Förderplan springen?</h2><div class="modal__actions"><button class="btn btn--primary" id="btnImportJump">Ja</button><button class="btn btn--secondary" id="btnImportStay">Nein</button></div></div></div>
 <div class="modal-overlay" id="step3ModeModal"><div class="modal"><h2 id="step3ModeTitle"></h2><div class="modal__actions"><button class="btn btn--primary" id="btnModeCards">Ja</button><button class="btn btn--secondary" id="btnModeQuick">Ohne Priorisierung fortfahren</button></div></div></div>
 <div class="modal-overlay" id="confirmModal"><div class="modal"><h2 id="confirmTitle"></h2><div class="modal__actions"><button class="btn btn--primary" id="btnConfirmOk">Ok</button><button class="btn btn--secondary" id="btnConfirmCancel">Abbrechen</button></div></div></div>
+<div class="modal-overlay" id="p3InfoModal"><div class="modal"><h3>Auf diese Ziele habt ihr euch geeinigt.</h3><p style="margin-bottom:20px;line-height:1.6;color:var(--clr-text)">Überlegt im Team passende Maßnahmen zum Erreichen der Ziele. Macht dies zum Beispiel in Stillarbeit auf Moderationskarten.</p><div class="modal__actions"><button class="btn btn--primary" id="btnP3InfoOk">Los geht's</button></div></div></div>
 <input type="file" accept=".json" class="file-input-hidden" id="fileImportInput">
     <datalist id="fbNameSuggestions"><option value="Kognition"><option value="Sprache"><option value="Emotionen/Verhalten"><option value="Soziale Interaktion"><option value="Motorik/Wahrnehmung"><option value="Lernstrategien"></datalist>
     <div class="app-container" id="wizardView">
@@ -300,7 +324,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         <section class="step-content" data-step="2" id="step2"></section>
         <section class="step-content" data-step="3" id="step3"></section>
         <section class="step-content" data-step="4" id="step4"></section>
-        <div class="nav-buttons"><button class="btn btn--secondary" id="btnBack">Förderplan importieren</button><div style="display:flex;gap:12px"><button class="btn btn--secondary" id="btnExport" style="display:none">Förderplan exportieren</button><button class="btn btn--primary" id="btnNext" disabled>Weiter</button></div></div>
+        <div class="nav-buttons"><button class="btn btn--secondary" id="btnBack">Förderplan importieren</button><div style="display:flex;gap:12px;align-items:center"><button class="btn btn--secondary" id="btnExport" style="display:none">Förderplan exportieren</button><button class="btn btn--secondary" id="btnDirectS4" style="display:none">Direkt zum Förderplan</button><button class="btn btn--primary" id="btnNext" disabled>Weiter</button></div></div>
         <footer class="app-footer"><strong>Quellhinweis</strong><br>Das Tool wurde von Marius Lücking, dem Förderkoordinator der Clara-Grunwald-Schule in Hamburg, entwickelt. Alle Förderziele, Lernausgangslagen und vorgeschlagenen Maßnahmen stammen aus der Handreichung <i>Fördermaßnahmen konkret!</i> der Senatsverwaltung für Bildung, Jugend und Familie Berlin (November 2018). Feedback oder Bugreports bitte an marius.luecking@cgs-hh.de senden.</footer>
     </div>
     <div class="print-view" id="printView"></div>
@@ -354,9 +378,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
             case 4:return{t:"\u2022 Passt die Maßnahmentabelle an, sortiert Ziele und Förderbereiche, ergänzt eigene Förderbereiche und Ziele.<br>\u2022 Exportiert oder druckt den fertigen Förderplan.",s:""};
             default:return{t:"",s:""}}}
         function s3Info(){var n=N();
-            if(s3.mode==="cards"&&s3.phase===1)return{t:"\u2022 Lest jede Karte gemeinsam vor und entscheidet: Passt die Beschreibung zu "+n+"?",s:""};
-            if(s3.mode==="cards"&&s3.phase===2)return{t:"\u2022 Klickt die Ziele an, die für "+n+" erreichbar scheinen.<br>\u2022 Das Team bestimmt gemeinsam die Ziele, die in den Förderplan übernommen werden.",s:"Ihr könnt diesen Schritt überspringen, wenn ihr nur eigene Ziele formulieren möchtet."};
-            return{t:"\u2022 Klickt die Ziele an, die für "+n+" erreichbar scheinen.<br>\u2022 Das Team bestimmt gemeinsam die Ziele, die in den Förderplan übernommen werden.",s:"Ihr könnt diesen Schritt überspringen, wenn ihr nur eigene Ziele formulieren möchtet."}}
+            if(s3.mode==="cards"&&s3.phase===1)return{t:"\u2022 Lest jede Karte gemeinsam vor und entscheidet: Passt die Ist-Beschreibung zu "+n+"?",s:""};
+            if(s3.phase===3)return{t:"\u2022 Betrachtet die Ziele gemeinsam am Smartboard.<br>\u2022 Jede Person überlegt sich still eigene Maßnahmen und notiert sie auf Karten oder Zetteln.<br>\u2022 Danach tauscht ihr euch aus und öffnet den Förderplan.",s:"Eigene Maßnahmen, hinter denen man steht, werden im Unterricht konsequenter umgesetzt."};
+            if(s3.mode==="cards"&&s3.phase===2)return{t:"\u2022 Klickt die Ziele an, die für "+n+" erreichbar scheinen.<br>\u2022 Das Team bestimmt gemeinsam die Ziele, die in den Förderplan übernommen werden.",s:"Dann könnt ihr unten entscheiden, ob ihr die Ziele erst im Team besprechen möchtet."};
+            return{t:"\u2022 Klickt die Ziele an, die für "+n+" erreichbar scheinen.<br>\u2022 Das Team bestimmt gemeinsam die Ziele, die in den Förderplan übernommen werden.",s:"Dann könnt ihr unten entscheiden, ob ihr die Ziele erst im Team besprechen möchtet."}}
         
         /* ===== DOM ===== */
         var $=document.getElementById.bind(document);
@@ -394,9 +419,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
             if(e.target.id==="feldFk3")plan.fk3=e.target.value;
             updNext()});
         
+        var $bDS4=$("btnDirectS4");
+        $bDS4.onclick=function(){saveS1();plan.foerderbereiche=plan.foerderbereiche||[];savePlan();goTo(4)};
+
         function updNext(){
+            var ex=document.getElementById("s3ChoiceRow");
+            if(ex&&currentStep!==3){ex.remove();$bN.style.display="";}
+            var ex2=document.getElementById("s3FinalChoice");
+            if(ex2&&currentStep!==3) ex2.remove();
+            /* Show/hide Direkt-zum-Förderplan button */
+            $bDS4.style.display=(currentStep===1)?"":"none";
             if(currentStep===1){$bN.disabled=!plan.grunddaten.vorname.trim();return}
             if(currentStep===3&&s3.mode==="cards"&&s3.phase===1){$bN.disabled=true;return}
+            if(currentStep===3&&s3.phase===3){$bN.disabled=true;return}
             $bN.disabled=false}
         
         function popS1(){
@@ -445,58 +480,85 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         /* ===== STEP 3 ===== */
         function makeIst(a,n){return a.map(function(t){return n+' '+esc(t)}).join('<br>')}
         function makeSoll(a,n){return a.map(function(t){return'Ziel: '+n+' '+esc(t)}).join('<br>')}
-        
+
         function initS3(fromS4){
-            s3.allCards=buildCards();s3.passt=[];s3.cardIndex=0;s3.activated={};
+            s3.allCards=buildCards();s3.passt=[];s3.cardIndex=0;s3.activated={};s3.phase=1;
             if(s3.allCards.length===0){s3.mode="quick";renderS3Grid(s3.allCards);refreshInfo();return}
             if(fromS4){s3.mode="quick";renderS3Grid(s3.allCards);refreshInfo();return}
             $("step3ModeTitle").textContent="Du hast "+s3.allCards.length+" mögliche Ziele für "+N()+". Möchtest du die Ziele im Team priorisieren?";
             $("step3ModeModal").classList.add("visible")}
-        
+
         $("btnModeCards").onclick=function(){$("step3ModeModal").classList.remove("visible");s3.mode="cards";s3.phase=1;renderS3P1();refreshInfo()};
         $("btnModeQuick").onclick=function(){$("step3ModeModal").classList.remove("visible");s3.mode="quick";renderS3Grid(s3.allCards);refreshInfo()};
-        
+
         function renderS3P1(){
             if(s3.cardIndex>=s3.allCards.length){s3.phase=2;s3.activated={};renderS3P2();refreshInfo();return}
             var tot=s3.allCards.length,i=s3.cardIndex,c=s3.allCards[i],pct=Math.round(i/tot*100),n=N();
             var h='<div class="card-viewer"><div class="card-viewer__progress"><span>Karte '+(i+1)+' von '+tot+'</span><div class="card-viewer__bar"><div class="card-viewer__bar-fill" style="width:'+pct+'%"></div></div><button type="button" class="card-viewer__skip" id="btnSkip">Alle restlichen überspringen</button></div>';
             h+='<div class="ziel-card" data-fb="'+c.fbId+'"><div class="ziel-card__bereich" style="color:var(--clr-fb-'+c.fbId+')">'+c.fbName+' \u2014 '+c.katName+' \u2014 '+c.ubName+'</div>';
+            /* Phase 1: Ist prominent oben, Soll klein unten */
             h+='<div class="ziel-card__ist">'+makeIst(c.ist,n)+'</div><div class="ziel-card__soll">'+makeSoll(c.soll,n)+'</div></div>';
             h+='<div class="card-viewer__actions">';
             if(i>0)h+='<button type="button" class="btn btn--secondary btn--small" id="btnCB">\u2190</button>';
             h+='<button type="button" class="btn btn--nicht" id="btnNi">Passt nicht</button>';
             h+='<button type="button" class="btn btn--passt" id="btnPa">Passt</button></div></div>';
-            $s3.innerHTML=h;
+            $s3.innerHTML=h;$s3.classList.remove("phase2");
             $("btnNi").onclick=function(){s3.cardIndex++;renderS3P1()};
             $("btnPa").onclick=function(){s3.passt.push(s3.allCards[s3.cardIndex]);s3.cardIndex++;renderS3P1()};
             $("btnSkip").onclick=function(){s3.phase=2;s3.activated={};renderS3P2();refreshInfo()};
             var cb=document.getElementById("btnCB");
             if(cb)cb.onclick=function(){if(s3.cardIndex>0){var p=s3.allCards[s3.cardIndex-1];s3.passt=s3.passt.filter(function(x){return x.gruppeId!==p.gruppeId});s3.cardIndex--;renderS3P1()}}}
-        
+
         function renderS3P2(){
+            s3.phase=2;
             var hasFiltered=s3.passt.length<s3.allCards.length;
             var h='<div class="s3-phase2-actions"><button type="button" class="btn btn--small btn--secondary" id="btnRP">Priorisierung neustarten</button>';
             if(hasFiltered)h+='<button type="button" class="btn btn--small btn--secondary" id="btnSA">Aussortierte Ziele anzeigen</button>';
             h+='</div>';
-            h+=buildGridHtml(s3.passt);$s3.innerHTML=h;
-            $("btnRP").onclick=function(){s3.passt=[];s3.cardIndex=0;s3.phase=1;s3.activated={};renderS3P1();refreshInfo()};
+            h+=buildGridHtml(s3.passt);$s3.innerHTML=h;$s3.classList.add("phase2");
+            $("btnRP").onclick=function(){s3.passt=[];s3.cardIndex=0;s3.phase=1;s3.activated={};$s3.classList.remove("phase2");renderS3P1();refreshInfo()};
             var sa=document.getElementById("btnSA");
             if(sa)sa.onclick=function(){s3.activated={};renderS3P2All()};
             attachGridClicks()}
-        
+
         function renderS3P2All(){
             var h='<div class="s3-phase2-actions"><button type="button" class="btn btn--small btn--secondary" id="btnRP">Priorisierung neustarten</button></div>';
-            h+=buildGridHtml(s3.allCards);$s3.innerHTML=h;
-            $("btnRP").onclick=function(){s3.passt=[];s3.cardIndex=0;s3.phase=1;s3.activated={};renderS3P1();refreshInfo()};
+            h+=buildGridHtml(s3.allCards);$s3.innerHTML=h;$s3.classList.add("phase2");
+            $("btnRP").onclick=function(){s3.passt=[];s3.cardIndex=0;s3.phase=1;s3.activated={};$s3.classList.remove("phase2");renderS3P1();refreshInfo()};
             attachGridClicks()}
-        
+
         function renderS3Grid(cards){
+            $s3.classList.remove("phase2");
             if(cards.length===0){$s3.innerHTML='<div class="step3-empty">Klicke auf weiter, um eigene Ziele zu formulieren.</div>';return}
             var h='<div class="s3-phase2-actions"><button type="button" class="btn btn--small btn--secondary" id="btnRP">Priorisierung neustarten</button></div>';
-            h+=buildGridHtml(cards);$s3.innerHTML=h;
-            $("btnRP").onclick=function(){s3.passt=[];s3.cardIndex=0;s3.mode="cards";s3.phase=1;s3.activated={};renderS3P1();refreshInfo()};
+            h+=buildGridHtml(cards);$s3.innerHTML=h;$s3.classList.add("phase2");
+            $("btnRP").onclick=function(){s3.passt=[];s3.cardIndex=0;s3.mode="cards";s3.phase=1;s3.activated={};$s3.classList.remove("phase2");renderS3P1();refreshInfo()};
             attachGridClicks()}
-        
+
+        /* Phase 3: Smartboard — alle ausgewählten Karten groß, 2-spaltig */
+        function renderS3P3(){
+            s3.phase=3;$s3.classList.remove("phase2");
+            var n=N(),act=getActivatedCards();
+            var h='<div class="p3-grid">';
+            act.forEach(function(c){
+                h+='<div class="p3-card" data-fb="'+c.fbId+'">';
+                h+='<div class="p3-card__bereich" style="color:var(--clr-fb-'+c.fbId+')">'+c.fbName+' \u2014 '+c.katName+'</div>';
+                h+='<div class="p3-card__soll">Ziel: '+c.soll.map(function(t){return n+' '+esc(t)}).join('<br>')+'</div>';
+                h+='<div class="p3-card__ist">Ist-Stand: '+makeIst(c.ist,n)+'</div>';
+                h+='</div>'});
+            h+='</div>';
+            h+='<div class="p3-final"><div class="p3-final__title">Wie möchtet ihr fortfahren?</div><div class="p3-final__opts">';
+            h+='<button type="button" class="p3-final__opt" id="btnP3NoM"><div class="p3-final__opt-title">Förderplan ohne Maßnahmen öffnen</div><div class="p3-final__opt-desc">Ihr habt im Team eigene Maßnahmen überlegt. Der Förderplan enthält nur die Ziele \u2014 die Maßnahmen tragt ihr selbst ein.</div></button>';
+            h+='<button type="button" class="p3-final__opt" id="btnP3WithM"><div class="p3-final__opt-title">Förderplan mit Maßnahmenvorschlägen öffnen</div><div class="p3-final__opt-desc">Der Förderplan enthält zusätzlich Maßnahmenvorschläge aus der Datenbank als Ausgangspunkt.</div></button>';
+            h+='</div></div>';
+            $s3.innerHTML=h;$bN.style.display="";refreshInfo();
+            $("btnP3NoM").onclick=function(){goToS4(false)};
+            $("btnP3WithM").onclick=function(){goToS4(true)}}
+
+        function getActivatedCards(){
+            var src=(s3.mode==="cards")?s3.passt:s3.allCards;
+            return src.filter(function(c){return s3.activated[c.gruppeId]})}
+
         function buildGridHtml(cards){
             var n=N(),fbOrd=[],fbMap={};
             cards.forEach(function(c){
@@ -510,24 +572,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
                 fb.kOrd.forEach(function(key){var g=fb.kats[key];
                     h+='<div class="fb-kategorie__title">'+g.katName+' \u2014 '+g.ubName+'</div><div class="ziel-grid">';
                     g.cards.forEach(function(c){var ac=s3.activated[c.gruppeId]?" active":"";
-                        h+='<div class="ziel-card'+ac+'" data-fb="'+c.fbId+'" data-gruppe-id="'+c.gruppeId+'"><div class="ziel-card__ist">'+makeIst(c.ist,n)+'</div><div class="ziel-card__soll">'+makeSoll(c.soll,n)+'</div></div>'});
+                        /* Ziel oben groß, Ist klein darunter (Phase 2 Stil via CSS) */
+                        h+='<div class="ziel-card'+ac+'" data-fb="'+c.fbId+'" data-gruppe-id="'+c.gruppeId+'">';
+                        h+='<div class="ziel-card__soll">'+makeSoll(c.soll,n)+'</div>';
+                        h+='<div class="ziel-card__ist">'+makeIst(c.ist,n)+'</div>';
+                        h+='</div>'});
                     h+='</div>'});h+='</div>'});
             return h}
-        
+
         function attachGridClicks(){$s3.onclick=function(e){var c=e.target.closest(".ziel-card[data-gruppe-id]");if(!c)return;var g=c.dataset.gruppeId;if(s3.activated[g]){delete s3.activated[g];c.classList.remove("active")}else{s3.activated[g]=true;c.classList.add("active")}}}
-        
-        function saveS3(){
-            var src=(s3.mode==="cards")?s3.passt:s3.allCards;
-            var act=src.filter(function(c){return s3.activated[c.gruppeId]});
+
+        function goToS4(withMassnahmen){saveS3(withMassnahmen);goTo(4)}
+
+        function saveS3(withMassnahmen){
+            var act=getActivatedCards();
             if(act.length===0){savePlan();return}
             var n=N(),kOrd=[],kMap={};
             act.forEach(function(c){
                 if(!kMap[c.katId]){kMap[c.katId]={name:c.katName,tzs:[]};kOrd.push(c.katId)}
                 var txt=c.soll.map(function(s){return n+" "+s}).join("; ");
-                var tz={id:uid(),"teilziel-text":txt,massnahmen:[]};
-                c.lernwege.forEach(function(lw){lw.massnahmen.forEach(function(m){
-                    tz.massnahmen.push({id:uid(),"massnahme-text":m,"wer-wie-oft":""})})});
-                kMap[c.katId].tzs.push(tz)});
+                var ms=[];
+                if(withMassnahmen!==false){
+                    c.lernwege.forEach(function(lw){lw.massnahmen.forEach(function(m){ms.push({id:uid(),"massnahme-text":m,"wer-wie-oft":""})})});
+                }
+                if(!ms.length)ms=[{id:uid(),"massnahme-text":"","wer-wie-oft":""}];
+                kMap[c.katId].tzs.push({id:uid(),"teilziel-text":txt,massnahmen:ms})});
             kOrd.forEach(function(kid){var k=kMap[kid];
                 plan.foerderbereiche.push({id:uid(),name:k.name,teilziele:k.tzs})});
             savePlan()}
@@ -1125,7 +1194,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         
         /* ===== NAV ===== */
         function updPL(){$pL.style.width=((currentStep-1)/(SC-1))*75+"%"}
-        function refreshInfo(){var i=stepInfo(currentStep);$iT.innerHTML=i.t;$iS.innerHTML=i.s;$iS.style.display=i.s?"block":"none";updNext()}
+        function refreshInfo(){var i=stepInfo(currentStep);$iT.innerHTML=i.t;$iS.innerHTML=i.s;$iS.style.display=i.s?"block":"none";
+            var box=$iT.closest(".info-box");
+            if(box){box.classList.remove("glow");void box.offsetWidth;box.classList.add("glow")}
+            updNext()}
         
         function goTo(step){
             if(step<1||step>SC)return;var prev=currentStep;currentStep=step;
@@ -1144,8 +1216,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         $bN.onclick=function(){if($bN.disabled)return;
             if(currentStep===1){saveS1();goTo(2);return}
             if(currentStep===2){saveS2();goTo(3);return}
-            if(currentStep===3){saveS3();goTo(4);return}
+            if(currentStep===3){
+                /* Phase 1: handled by Passt/Passt-nicht buttons */
+                if(s3.mode==="cards"&&s3.phase===1)return;
+                /* Phase 3: handled by P3 buttons */
+                if(s3.phase===3)return;
+                /* Phase 2 / quick: show choice row if not already shown */
+                showS3Choice();return}
             if(currentStep===4){showPrint();return}};
+
+        function showS3Choice(){
+            var ex=document.getElementById("s3ChoiceRow");if(ex)ex.remove();
+            /* Hide the Weiter button while choice is shown */
+            $bN.style.display="none";
+            var row=document.createElement("div");
+            row.id="s3ChoiceRow";row.className="s3-next-row";
+            row.innerHTML='<button type="button" class="btn" id="btnS3P3">Maßnahmen im Team überlegen</button>'
+                +'<button type="button" class="btn" id="btnS3Direct">Direkt zum Förderplan</button>';
+            $bN.parentNode.insertBefore(row,$bN);
+            document.getElementById("btnS3P3").onclick=function(){
+                row.remove();$bN.style.display="";
+                window.scrollTo({top:0,behavior:"smooth"});
+                $("p3InfoModal").classList.add("visible");
+                $("btnP3InfoOk").onclick=function(){
+                    $("p3InfoModal").classList.remove("visible");
+                    renderS3P3();refreshInfo();
+                }};
+            document.getElementById("btnS3Direct").onclick=function(){
+                /* Show final choice panel below the step content, keep both buttons */
+                var ex2=document.getElementById("s3FinalChoice");if(ex2)ex2.remove();
+                var cr=document.createElement("div");cr.id="s3FinalChoice";cr.className="p3-final";
+                cr.innerHTML='<div class="p3-final__title">Wie möchtet ihr fortfahren?</div><div class="p3-final__opts">'
+                    +'<button type="button" class="p3-final__opt" id="btnS3WithM"><div class="p3-final__opt-title">Förderplan mit Maßnahmenvorschlägen öffnen</div><div class="p3-final__opt-desc">Der Förderplan enthält Maßnahmenvorschläge aus der Datenbank als Ausgangspunkt \u2014 ihr könnt sie anpassen oder ergänzen.</div></button>'
+                    +'<button type="button" class="p3-final__opt" id="btnS3NoM"><div class="p3-final__opt-title">Förderplan ohne Maßnahmen öffnen</div><div class="p3-final__opt-desc">Der Förderplan enthält nur die Ziele. Die Maßnahmen tragt ihr selbst ein.</div></button>'
+                    +'</div>';
+                $s3.appendChild(cr);cr.scrollIntoView({behavior:"smooth",block:"start"});
+                document.getElementById("btnS3WithM").onclick=function(){row.remove();$bN.style.display="";cr.remove();goToS4(true)};
+                document.getElementById("btnS3NoM").onclick=function(){row.remove();$bN.style.display="";cr.remove();goToS4(false)}}}
         
         $bB.onclick=function(){
             if(currentStep===1){$("fileImportInput").click();return}
