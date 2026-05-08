@@ -1591,27 +1591,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
         function doExportFile(){
             if(window.goatcounter)goatcounter.count({path:"event-export",title:"F\u00f6rderplan exportiert",event:true});
             var fn=getExportFilename("cgs");
-            var bl=new Blob([JSON.stringify(plan,null,2)],{type:"application/octet-stream"});
+            var data=JSON.stringify(plan,null,2);
+            var bl=new Blob([data],{type:"application/octet-stream"});
             var u=URL.createObjectURL(bl),a=document.createElement("a");a.href=u;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u)}
-        function doExportMail(){
+
+        function doExportShare(){
+            var fn=getExportFilename("cgs");
+            var data=JSON.stringify(plan,null,2);
+            var file=new File([data],fn,{type:"application/octet-stream"});
+            navigator.share({files:[file],title:"F\u00f6rderplan"}).catch(function(){doExportFile()})}
+
+        function doExportTextMail(){
             var nm=plan.grunddaten.rufname||plan.grunddaten.vorname||"";
-            var sub=encodeURIComponent("F\u00f6rderplan"+(nm?" \u2013 "+nm:""));
-            var body=encodeURIComponent("Hier ist der F\u00f6rderplan als Anlage.\n\nHinweis: Die .cgs-Datei kann nur mit dem F\u00f6rderplan-Tool ge\u00f6ffnet werden.\n\nBitte h\u00e4nge die Datei aus deinem Download-Ordner an diese Mail an.");
-            window.location.href="mailto:?subject="+sub+"&body="+body;
-            setTimeout(doExportFile,300)}
+            var fn=getExportFilename("cgs");
+            var data=JSON.stringify(plan,null,2);
+            var anleitung="ANLEITUNG:\n1. Markiere und kopiere den gesamten Text unterhalb dieser Anleitung.\n2. \u00d6ffne einen Texteditor (z.B. Notizen, TextEdit).\n3. F\u00fcge den Text ein und speichere die Datei als: "+fn+"\n4. \u00d6ffne die Datei im F\u00f6rderplan-Tool \u00fcber den Button 'F\u00f6rderplan importieren'.\n\n--- F\u00d6RDERPLAN-DATEN (nicht ver\u00e4ndern) ---\n";
+            var sub=encodeURIComponent("F\u00f6rderplan"+(nm?" \u2013 "+nm:"")+" (Textexport)");
+            var body=encodeURIComponent(anleitung+data);
+            window.location.href="mailto:?subject="+sub+"&body="+body}
+
+        function canShareFiles(){
+            try{
+                /* Only use Share API on touch devices (iPad/iPhone/Android) */
+                if(!navigator.maxTouchPoints||navigator.maxTouchPoints<1)return false;
+                var f=new File(["x"],"x.cgs");
+                return!!(navigator.share&&navigator.canShare&&navigator.canShare({files:[f]}))}
+            catch(e){return false}}
+
         function exportPlan(){
-            var ex=document.getElementById("exportChoiceRow");if(ex)ex.remove();
             var mo=$("stepInfoModal");
             $("stepInfoTitle").textContent="F\u00f6rdertool-Datei speichern";
-            $("stepInfoText").innerHTML="Die Datei kann in diesem Tool wieder ge\u00f6ffnet und bearbeitet werden.<br><br>Klicke auf <strong>Per Mail senden</strong>, um die Datei auf deine Mail-Adresse zu schicken (falls kein Speicher-Dialog kommt, z.\u202fB. am iPad).";
+            $("stepInfoText").innerHTML="Die Datei kann in diesem Tool wieder ge\u00f6ffnet und bearbeitet werden.";
             var acts=mo.querySelector(".modal__actions");
-            acts.innerHTML='<button class="btn btn--primary" id="btnExpSave2">Auf Computer speichern</button>'
-                +'<button class="btn btn--secondary" id="btnExpMail2">Per Mail senden</button>';
+            var shareAvail=canShareFiles();
+            acts.innerHTML=(shareAvail
+                ?'<button class="btn btn--primary" id="btnExpMain">Teilen / Per Mail senden</button>'
+                :'<button class="btn btn--primary" id="btnExpMain">Auf Computer speichern</button>')
+                +'<button class="btn btn--secondary" id="btnExpTextMail" style="font-size:0.75rem;color:var(--clr-text-muted);border-color:var(--clr-text-muted)">Notfalll\u00f6sung \u2192 Als Text per Mail senden</button>';
             mo.classList.add("visible");
-            setTimeout(function(){document.getElementById("btnExpSave2").focus()},50);
+            setTimeout(function(){document.getElementById("btnExpMain").focus()},50);
             function restore(){acts.innerHTML='<button class="btn btn--primary" id="btnStepInfoOk">Ok</button>';$("btnStepInfoOk").onclick=function(){mo.classList.remove("visible")}}
-            document.getElementById("btnExpSave2").onclick=function(){mo.classList.remove("visible");restore();doExportFile()};
-            document.getElementById("btnExpMail2").onclick=function(){mo.classList.remove("visible");restore();doExportMail()}}
+            document.getElementById("btnExpMain").onclick=function(){
+                mo.classList.remove("visible");restore();
+                if(shareAvail)doExportShare();else doExportFile()};
+            document.getElementById("btnExpTextMail").onclick=function(){
+                mo.classList.remove("visible");restore();doExportTextMail()}}
         
         $("fileImportInput").onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();
             r.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(typeof d==="object"&&d!==null&&"plantyp" in d){plan=d;if(!plan.selected_unterbereiche)plan.selected_unterbereiche=[];s3FromObj(plan._s3);savePlan();popS1();syncS2();$("importModal").classList.add("visible")}else alert("Kein gültiger Förderplan.")}catch(err){alert("Fehler: "+err.message)}};
