@@ -840,7 +840,7 @@
             <section class="step-content" data-step="3" id="step3"></section>
             <section class="step-content" data-step="4" id="step4"></section>
             <div class="nav-buttons"><button class="btn btn--secondary" id="btnBack">Förderplan importieren</button><div style="display:flex;gap:12px;align-items:center"><button class="btn btn--secondary" id="btnExport" style="display:none">Fördertool-Datei exportieren</button><button class="btn btn--secondary" id="btnDirectS4" style="display:none">Direkt zum Förderplan</button><button class="btn btn--primary" id="btnNext" disabled>Weiter</button></div></div>
-            <footer class="app-footer"><strong>Quellhinweis</strong><br>Das Tool wurde von Marius Lücking, dem Förderkoordinator der Clara-Grunwald-Schule in Hamburg, entwickelt. Alle Förderziele, Lernausgangslagen und vorgeschlagenen Maßnahmen stammen aus der Handreichung <i>Fördermaßnahmen konkret!</i> der Senatsverwaltung für Bildung, Jugend und Familie Berlin (November 2018). Feedback oder Bugreports bitte an marius.luecking@cgs-hh.de senden.</footer>
+            <footer class="app-footer"><strong>Quellhinweis</strong><br>Alle Förderziele, Lernausgangslagen und vorgeschlagenen Maßnahmen stammen aus der Handreichung <i>Fördermaßnahmen konkret!</i> der Senatsverwaltung für Bildung, Jugend und Familie Berlin (November 2018). Das Tool wurde von Marius Lücking, dem Förderkoordinator der Clara-Grunwald-Schule in Hamburg, entwickelt. Feedback oder Bugreports bitte an <a href="mailto:marius.luecking@cgs-hh.de" style="color:var(--clr-accent-dark)">marius.luecking@cgs-hh.de</a> senden.</footer>
         </div>
         <div class="print-view" id="printView"></div>
         <script id="quelldatenScript" type="application/json">{
@@ -3173,7 +3173,7 @@
                 return nm.toLowerCase().replace(/\s+/g,"_")+"_"+ds+"_Foerderplan."+(ext||"fk4")}
             function doExportFile(){
                 if(window.goatcounter)goatcounter.count({
-                    path:"event-export",title:"Förderplan exportiert",event:true
+                    path:"fk4-export",title:"Förderplan exportiert",event:true
                 });
                 var fn=getExportFilename("fk4");
                 var data=JSON.stringify(plan,null,2);
